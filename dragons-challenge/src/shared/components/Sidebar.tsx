@@ -1,5 +1,6 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
 const SidebarContainer = styled.nav`
   width: 250px;
@@ -21,25 +22,30 @@ const Logo = styled.div`
   margin-bottom: 2rem;
 `;
 
-const NavItem = styled(Link)<{ $active?: boolean }>`
+const NavList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const NavItem = styled.button<{ $active?: boolean }>`
   display: flex;
   align-items: center;
+  width: 100%;
   padding: 1rem 2rem;
   color: ${props => props.$active ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
   text-decoration: none;
   transition: all 0.3s ease;
   background: ${props => props.$active ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 1rem;
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);
     color: white;
   }
-`;
-
-const NavList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
 
 const LogoutButton = styled.button`
@@ -54,6 +60,7 @@ const LogoutButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 1rem;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
@@ -62,27 +69,45 @@ const LogoutButton = styled.button`
 
 export function Sidebar() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const { confirmNavigation } = useUnsavedChanges(false);
+
+  const handleNavigation = (path: string) => {
+    confirmNavigation(path);
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/login');
+    if (window.confirm('Deseja realmente sair?')) {
+      localStorage.removeItem('currentUser');
+      confirmNavigation('/login');
+    }
   };
 
   return (
     <SidebarContainer>
       <Logo>🐲 Dragons</Logo>
       <NavList>
-        <NavItem to="/dragons" $active={location.pathname === '/dragons'}>
+        <NavItem 
+          onClick={() => handleNavigation('/dragons')} 
+          $active={location.pathname === '/dragons'}
+        >
           Lista de Dragões
         </NavItem>
-        <NavItem to="/dragons/new" $active={location.pathname === '/dragons/new'}>
+        <NavItem 
+          onClick={() => handleNavigation('/dragons/new')} 
+          $active={location.pathname === '/dragons/new'}
+        >
           Cadastrar Dragão
         </NavItem>
-        <NavItem to="/generator" $active={location.pathname === '/generator'}>
+        <NavItem 
+          onClick={() => handleNavigation('/generator')} 
+          $active={location.pathname === '/generator'}
+        >
           Gerador de Dragões
         </NavItem>
-        <NavItem to="/profile" $active={location.pathname === '/profile'}>
+        <NavItem 
+          onClick={() => handleNavigation('/profile')} 
+          $active={location.pathname === '/profile'}
+        >
           Meu Perfil
         </NavItem>
       </NavList>
