@@ -6,76 +6,154 @@ import { uploadService } from '../../../shared/services/uploadService';
 import { useUnsavedChanges } from '../../../shared/hooks/useUnsavedChanges';
 
 const Container = styled.div`
-  padding: 2rem;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 2rem 4rem 2rem 6rem;
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  
 `;
 
 const Title = styled.h1`
-  color: #2c3e50;
-  margin-bottom: 2rem;
+  font-size: 40px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  padding-bottom: 8px;
+  line-height: 1.2;
 `;
 
 const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: 20px;
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg, #0048ff, #5888ff, #ff8bf3, #FFC5EA);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 2rem;
 `;
 
 const Label = styled.label`
-  font-weight: bold;
-  color: #666;
+  font-weight: 400;
+  color: #828080;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
 `;
 
 const Input = styled.input`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  outline: none;
 
   &:focus {
-    outline: none;
-    border-color: #3498db;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  &::placeholder {
+    color: #828080;
   }
 `;
 
 const Select = styled.select`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  outline: none;
+  cursor: pointer;
 
   &:focus {
-    outline: none;
-    border-color: #3498db;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
   }
 `;
 
 const ImagePreviewContainer = styled.div`
-  width: 150px;
-  height: 150px;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  padding: 3px;
   border-radius: 50%;
-  border: 2px dashed #ddd;
+  margin: 0 auto 2rem;
+  background: linear-gradient(45deg, #0048ff, #5888ff, #ff8bf3, #FFC5EA);
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(45deg, #0048ff, #5888ff, #ff8bf3, #FFC5EA);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.3s;
 
-  &:hover {
-    border-color: #3498db;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -87,67 +165,85 @@ const ImagePreview = styled.img`
 
 const ImagePlaceholder = styled.div`
   font-size: 3rem;
-  color: #ddd;
+  color: #4a9eff;
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
+  margin-top: 3rem;
+  background: white;
 `;
 
 const Button = styled.button`
   flex: 1;
   padding: 1rem;
-  background: #3498db;
-  color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 28px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.2s;
+  outline: none;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  background: white;
 
-  &:hover {
-    background: #2980b9;
+  &:focus {
+    outline: none;
   }
 
   &:disabled {
-    background: #95a5a6;
+    opacity: 0.7;
     cursor: not-allowed;
+  }
+
+  &[type="submit"] {
+    color: #828080;
+
+    &:hover {
+      box-shadow: 0px 4px 16px rgba(0, 72, 255, 0.2);
+    }
   }
 `;
 
 const CancelButton = styled(Button)`
-  background: #e74c3c;
+   color: #828080;
+  background: white;
 
   &:hover {
-    background: #c0392b;
+    box-shadow: 0px 4px 16px rgba(0, 72, 255, 0.2);
   }
 `;
 
 const ErrorMessage = styled.p`
-  color: #e74c3c;
-  font-size: 0.875rem;
+  color: #ff4444;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
+  text-align: center;
 `;
 
 const ProgressBarContainer = styled.div`
   width: 100%;
   height: 4px;
-  background-color: #eee;
+  background-color: #333;
   border-radius: 2px;
   margin-top: 1rem;
 `;
 
 const ProgressBarFill = styled.div<{ $progress: number }>`
   height: 100%;
-  background-color: #3498db;
+  background-color: #4a9eff;
   border-radius: 2px;
   width: ${props => props.$progress}%;
   transition: width 0.3s ease;
 `;
 
 const UploadInfo = styled.p`
-  color: #666;
+  color: #999;
   font-size: 0.875rem;
   text-align: center;
   margin-top: 0.5rem;
@@ -242,11 +338,23 @@ export function CreateDragon() {
         }
       }
 
-      await dragonsService.createDragon({
+      const newDragon = {
         name: name.trim(),
         type,
-        imageUrl
-      });
+        imageUrl,
+        createdAt: new Date().toISOString()
+      };
+
+      await dragonsService.createDragon(newDragon);
+
+      // atualizar lista de dragoes no local storage
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const userDragons = JSON.parse(localStorage.getItem(`dragons_${currentUser.id}`) || '[]');
+      userDragons.push({ ...newDragon, id: Date.now() });
+      localStorage.setItem(`dragons_${currentUser.id}`, JSON.stringify(userDragons));
+
+      //disparar evento para atualizar a lista
+      window.dispatchEvent(new Event('storage'));
 
       setUploadProgress(100);
       navigate('/dragons');
@@ -275,14 +383,14 @@ export function CreateDragon() {
             onChange={handleImageChange}
             style={{ display: 'none' }}
           />
-          <ImagePreviewContainer
-            onClick={() => document.getElementById('image')?.click()}
-          >
+          <ImagePreviewContainer onClick={() => document.getElementById('image')?.click()}>
+            <ImageWrapper>
             {imagePreview ? (
               <ImagePreview src={imagePreview} alt="Preview" />
             ) : (
               <ImagePlaceholder>🐲</ImagePlaceholder>
             )}
+            </ImageWrapper>
           </ImagePreviewContainer>
           {uploadProgress > 0 && uploadProgress < 100 && (
             <>
@@ -333,3 +441,5 @@ export function CreateDragon() {
     </Container>
   );
 }
+
+export default CreateDragon;

@@ -6,17 +6,19 @@ const LayoutContainer = styled.div`
 `;
 
 const MainContent = styled.main`
-  margin-left: 250px; 
+  margin-left: 250px;
   width: calc(100% - 250px);
   min-height: 100vh;
   padding: 2rem;
+  background-color: #121212;
+  color: #ffffff;
 `;
 
 interface PrivateLayoutProps {
   children: React.ReactNode;
 }
 
-export function PrivateLayout({ children }: PrivateLayoutProps) {
+export const PrivateLayout = ({ children }: PrivateLayoutProps) => {
   return (
     <LayoutContainer>
       <Sidebar />
@@ -25,4 +27,6 @@ export function PrivateLayout({ children }: PrivateLayoutProps) {
       </MainContent>
     </LayoutContainer>
   );
-}
+};
+
+export default PrivateLayout;

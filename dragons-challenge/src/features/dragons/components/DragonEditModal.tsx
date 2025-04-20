@@ -3,53 +3,97 @@ import styled from 'styled-components';
 import { Modal } from '../../../shared/components/Modal';
 
 const Title = styled.h2`
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  padding-bottom: 8px;
+  line-height: 1.2;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.8rem;
 `;
 
 const Label = styled.label`
-  font-weight: bold;
-  color: #666;
+  font-weight: 400;
+  color: #828080;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
 `;
 
 const Input = styled.input`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+   padding: 1rem;
+  border: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  outline: none;
+
+  &:focus {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  &::placeholder {
+    color: #C4C4C4;
+  }
 `;
 
 const Select = styled.select`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  outline: none;
+  cursor: pointer;
+
+  &:focus {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  }
 `;
 
 const Button = styled.button`
-  padding: 0.8rem;
-  background: #3498db;
-  color: white;
+  width: 100%;
+  padding: 1rem;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 28px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.2s;
+  outline: none;
 
   &:hover {
-    background: #2980b9;
+    box-shadow: 0px 4px 16px rgba(0, 72, 255, 0.2);
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 

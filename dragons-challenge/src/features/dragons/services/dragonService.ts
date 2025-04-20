@@ -9,31 +9,31 @@ export interface Dragon {
 }
 
 export const dragonsService = {
-  // Buscar todos os dragões
+  // busca todos os drags
   getAllDragons: async () => {
     const response = await api.get<Dragon[]>('/dragon');
     return response.data.sort((a, b) => a.name.localeCompare(b.name));
   },
 
-  // Buscar um dragão específico
+  // busca um drag especifico
   getDragonById: async (id: number) => {
     const response = await api.get<Dragon>(`/dragon/${id}`);
     return response.data;
   },
 
-  // Criar um novo dragão
+  // cria um novo drag
   createDragon: async (dragon: Omit<Dragon, 'id' | 'createdAt'>) => {
     const response = await api.post<Dragon>('/dragon', dragon);
     return response.data;
   },
 
-  // Atualizar um dragão
+  // atualiza um drag
   updateDragon: async (id: number, dragon: Partial<Dragon>) => {
     const response = await api.put<Dragon>(`/dragon/${id}`, dragon);
     return response.data;
   },
 
-  // Deletar um dragão
+  // deleta um drag
   deleteDragon: async (id: number) => {
     await api.delete(`/dragon/${id}`);
   }

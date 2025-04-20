@@ -1,16 +1,16 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
 const SidebarContainer = styled.nav`
-  width: 250px;
+  width: 280px;
   height: 100vh;
-  background-color: #2c3e50;
+  background-color: white;
   position: fixed;
   left: 0;
   top: 0;
   padding: 2rem 0;
   color: white;
+  box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.09);
 `;
 
 const Logo = styled.div`
@@ -31,20 +31,33 @@ const NavList = styled.div`
 const NavItem = styled.button<{ $active?: boolean }>`
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  width: 80%;
   padding: 1rem 2rem;
-  color: ${props => props.$active ? '#fff' : 'rgba(255, 255, 255, 0.7)'};
+  margin-left: 20px;
+  color: ${props => props.$active ? '#ffffff' : '#828080'};
   text-decoration: none;
   transition: all 0.3s ease;
-  background: ${props => props.$active ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
-  border: none;
+  background: ${props => props.$active ?  'rgb(0, 72, 255)' : 'transparent'};
+  border: none ;
+  border-radius: 40px;
   cursor: pointer;
+  text-align: center;
   text-align: left;
   font-size: 1rem;
+  transition: all 0.8s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #6E97FF;
     color: white;
+    border: none;
   }
 `;
 
@@ -54,37 +67,45 @@ const LogoutButton = styled.button`
   left: 2rem;
   right: 2rem;
   padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  background: white;
+  color: #828080;
+  border: 1px solid #eeeeee;
+  border-radius: 40px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.8s ease;
   font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  text-align: center;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+    color: white;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
   }
 `;
 
-export function Sidebar() {
+export const Sidebar = () => {
   const location = useLocation();
-  const { confirmNavigation } = useUnsavedChanges(false);
+  const navigate = useNavigate();
 
   const handleNavigation = (path: string) => {
-    confirmNavigation(path);
+    navigate(path);
   };
 
   const handleLogout = () => {
     if (window.confirm('Deseja realmente sair?')) {
       localStorage.removeItem('currentUser');
-      confirmNavigation('/login');
+      localStorage.removeItem('isAuthenticated');
+      navigate('/login');
     }
   };
 
   return (
     <SidebarContainer>
-      <Logo>🐲 Dragons</Logo>
+      <Logo><img src="dragons-logo.svg" alt="logo" /></Logo>
       <NavList>
         <NavItem 
           onClick={() => handleNavigation('/dragons')} 
@@ -99,8 +120,8 @@ export function Sidebar() {
           Cadastrar Dragão
         </NavItem>
         <NavItem 
-          onClick={() => handleNavigation('/generator')} 
-          $active={location.pathname === '/generator'}
+          onClick={() => handleNavigation('/dragons/generator')} 
+          $active={location.pathname === '/dragons/generator'}
         >
           Gerador de Dragões
         </NavItem>
@@ -116,4 +137,6 @@ export function Sidebar() {
       </LogoutButton>
     </SidebarContainer>
   );
-}
+};
+
+export default Sidebar;

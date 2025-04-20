@@ -1,50 +1,97 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { PasswordField } from '../components/PasswordInput';
+
 
 const Container = styled.div`
-  padding: 2rem;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 2rem 4rem 2rem 6rem;
+  width: 100%;
+  min-height: 100vh;
+  background: white;;
 `;
 
 const Title = styled.h1`
-  color: #2c3e50;
-  margin-bottom: 2rem;
+  font-size: 40px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  padding-bottom: 8px;
+  line-height: 1.2;
 `;
 
 const Card = styled.div`
+ position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  border-radius: 20px;
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(45deg, #0048ff, #5888ff, #ff8bf3, #FFC5EA);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
 `;
 
 const Label = styled.label`
-  font-weight: bold;
-  color: #666;
+  font-weight: 400;
+  color: #828080;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 `;
 
 const Input = styled.input`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  color: #828080;
+  background: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  outline: none;
 
   &:focus {
-    outline: none;
-    border-color: #3498db;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  &::placeholder {
+    color: #C4C4C4;
   }
 
   &:disabled {
-    background: #f5f5f5;
+    background: #f8f9fa;
+    color: #828080;
     cursor: not-allowed;
+    opacity: 0.8;
   }
 `;
 
@@ -57,42 +104,62 @@ const ButtonGroup = styled.div`
 const Button = styled.button`
   flex: 1;
   padding: 1rem;
-  background: #3498db;
-  color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 28px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: background 0.2s;
+  outline: none;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.09);
+  background: white;
+  color: #828080;
 
   &:hover {
-    background: #2980b9;
+    box-shadow: 0px 4px 16px rgba(0, 72, 255, 0.2);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   &:disabled {
-    background: #95a5a6;
+    opacity: 0.7;
     cursor: not-allowed;
   }
 `;
 
 const CancelButton = styled(Button)`
-  background: #e74c3c;
+   color: #828080;
 
   &:hover {
-    background: #c0392b;
-  }
+    box-shadow: 0px 4px 16px rgba(0, 72, 255, 0.2);
+}
 `;
 
 const ErrorMessage = styled.p`
-  color: #e74c3c;
-  font-size: 0.875rem;
+  color: #ff4444;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
+  text-align: center;
+  background-color: rgba(255, 68, 68, 0.1);
+  padding: 0.8rem;
+  border-radius: 28px;
 `;
 
 const SuccessMessage = styled.p`
-  color: #2ecc71;
-  font-size: 0.875rem;
+  color: #00C851;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
+  text-align: center;
+  background-color: rgba(0, 200, 81, 0.1);
+  padding: 0.8rem;
+  border-radius: 28px;
 `;
 
 interface User {
@@ -225,32 +292,32 @@ export function Profile() {
           <>
             <FormGroup>
               <Label>Senha atual</Label>
-              <Input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Digite para alterar a senha"
-              />
-            </FormGroup>
+              <PasswordField
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+        placeholder="Digite para alterar a senha"
+      />
+    </FormGroup>
 
             {currentPassword && (
               <>
-                <FormGroup>
-                  <Label>Nova senha</Label>
-                  <Input
-                    type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                  />
-                </FormGroup>
+                
+            <FormGroup>
+              <Label>Nova senha</Label>
+              <PasswordField
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Digite a nova senha"
+              />
+            </FormGroup>
 
                 <FormGroup>
-                  <Label>Confirmar nova senha</Label>
-                  <Input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
+                      <Label>Confirmar nova senha</Label>
+                <PasswordField
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirme a nova senha"
+                />
                 </FormGroup>
               </>
             )}

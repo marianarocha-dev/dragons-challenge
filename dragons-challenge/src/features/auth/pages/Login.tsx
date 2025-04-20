@@ -1,134 +1,255 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { FaUser, FaLock } from 'react-icons/fa';
 
+interface User {
+  id: number;
+  fullName: string;
+  password: string;
+  createdAt: string;
+}
 
-const Container = styled.div`
+const LoginPage = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const LeftSection = styled.div`
+  flex: 1;
+  background-image: url('/dragon-pattern.svg');
+  background-size: cover;
+  background-position: center;
+  background-color: #2B1D62;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const RightSection = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  background-color: white;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    flex: none;
+    width: 100%;
+  }
+`;
+
+const LoginContainer = styled.div`
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-size: 48px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  padding-bottom: 8px;
+  line-height: 1.2;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
-  max-width: 400px;
-  padding: 2rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
 `;
 
 const Input = styled.input`
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-`;
-
-const Button = styled.button`
-  padding: 0.8rem;
-  background: #4a90e2;
-  color: white;
+  width: 100%;
+  height: 56px;
+  padding: 0 56px;
+  border-radius: 28px;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: background 0.2s;
+  background: white;
+  font-size: 16px;
+  color: #333333;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
 
-  &:hover {
-    background: #357abd;
+  &::placeholder {
+    color: #C4C4C4;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 72, 255, 0.2);
   }
 `;
 
-const StyledLink = styled(Link)`
-  color: #4a90e2;
-  text-decoration: none;
+const IconWrapper = styled.div`
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #C4C4C4;
+  font-size: 20px;
+`;
+
+const ForgotPassword = styled(Link)`
+  color: #828080;
+  font-size: 14px;
+  text-align: right;
+  margin-top: -0.5rem;
+
+  &:hover {
+    text-decoration: underline;
+    color: #828080;
+  }
+`;
+
+const LoginButton = styled.button`
+  width: 100%;
+  height: 56px;
+  border-radius: 28px;
+  border: none;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+  color: white;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-top: 1rem;
+  transition: opacity 0.2s;
+  
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
+const RegisterLink = styled(Link)`
+  color: #828080;
+  font-size: 14px;
   text-align: center;
   margin-top: 1rem;
 
   &:hover {
     text-decoration: underline;
+    color: #828080;
   }
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(255, 68, 68, 0.1);
   color: #ff4444;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 14px;
 `;
 
 export function Login() {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('currentUser') !== null;
-    if (isAuthenticated) {
-      navigate('/dragons');
-    }
-  }, [navigate]);
-
-  const [fullName, setFullName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-
-    // Validações básicas
-    if (!fullName || !password) {
-      setError('Por favor, preencha todos os campos');
-      return;
-    }
+    setIsLoading(true);
+    setError(null);
 
     try {
-      // Buscar usuários do localStorage
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      
-      // Procurar usuário pelo nome
-      const user = users.find((u: { fullName: string; password: string }) => 
-        u.fullName === fullName && u.password === password
-      );
+      const users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+      const user = users.find((u: User) => u.fullName === username && u.password === password);
 
       if (user) {
-        // Salvar informação de que usuário está logado
         localStorage.setItem('currentUser', JSON.stringify(user));
-        
-        // Redirecionar para a lista de dragões
+        localStorage.setItem('isAuthenticated', 'true');
         navigate('/dragons');
       } else {
-        setError('Nome de usuário ou senha incorretos');
+        throw new Error('Usuário ou senha inválidos');
       }
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setError('Erro ao fazer login. Tente novamente.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erro ao fazer login');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <Input
-          type="text"
-          placeholder="Nome completo"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Button type="submit">Entrar</Button>
-        <StyledLink to="/register">Ainda não tenho cadastro</StyledLink>
-      </Form>
-    </Container>
+    <LoginPage>
+      <LeftSection />
+      <RightSection>
+        <LoginContainer>
+          <Title>Login</Title>
+          <Form onSubmit={handleLogin}>
+            <InputWrapper>
+              <IconWrapper>
+                <FaUser />
+              </IconWrapper>
+              <Input
+                type="text"
+                placeholder="Digite seu nome de usuário"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </InputWrapper>
+
+            <InputWrapper>
+              <IconWrapper>
+                <FaLock />
+              </IconWrapper>
+              <Input
+                type="password"
+                placeholder="Digite sua senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </InputWrapper>
+
+            <ForgotPassword to="/forgot-password">
+              Esqueci minha senha
+            </ForgotPassword>
+
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+
+            <LoginButton type="submit" disabled={isLoading}>
+              {isLoading ? 'Entrando...' : 'Entrar'}
+            </LoginButton>
+
+            <RegisterLink to="/register">
+              Ainda não tenho cadastro
+            </RegisterLink>
+          </Form>
+        </LoginContainer>
+      </RightSection>
+    </LoginPage>
   );
 }
+
+export default Login;

@@ -2,13 +2,21 @@ import styled from 'styled-components';
 import { Modal } from '../../../shared/components/Modal';
 
 const Title = styled.h2`
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background: linear-gradient(90deg, #0048FF 0%, #FF8BF3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  padding-bottom: 8px;
+  line-height: 1.2;
 `;
 
 const InfoContainer = styled.div`
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const InfoItem = styled.div`
@@ -18,12 +26,17 @@ const InfoItem = styled.div`
 `;
 
 const Label = styled.span`
-  font-weight: bold;
-  color: #666;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #828080;
+  font-size: 16px;
 `;
 
 const Value = styled.span`
-  color: #2c3e50;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #828080;
+  font-size: 13px;
 `;
 
 interface DragonDetailsModalProps {
