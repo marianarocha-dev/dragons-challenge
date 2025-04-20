@@ -110,18 +110,6 @@ const IconWrapper = styled.div`
   font-size: 20px;
 `;
 
-const ForgotPassword = styled(Link)`
-  color: #828080;
-  font-size: 14px;
-  text-align: right;
-  margin-top: -0.5rem;
-
-  &:hover {
-    text-decoration: underline;
-    color: #828080;
-  }
-`;
-
 const LoginButton = styled.button`
   width: 100%;
   height: 56px;
@@ -231,10 +219,6 @@ export function Login() {
                 required
               />
             </InputWrapper>
-
-            <ForgotPassword to="/forgot-password">
-              Esqueci minha senha
-            </ForgotPassword>
 
             {error && <ErrorMessage>{error}</ErrorMessage>}
 

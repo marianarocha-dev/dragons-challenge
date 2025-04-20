@@ -14,6 +14,7 @@ export function Router() {
         {/* rotas publicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+    
 
         {/* rotas protegidas */}
         <Route

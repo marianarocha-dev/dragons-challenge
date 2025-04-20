@@ -65,13 +65,15 @@ interface PasswordFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   disabled?: boolean;
+  autoComplete?: string;
 }
 
 export const PasswordField = ({ 
   value, 
   onChange, 
   placeholder, 
-  disabled 
+  disabled,
+  autoComplete 
 }: PasswordFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -83,6 +85,7 @@ export const PasswordField = ({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
+        autoComplete={autoComplete}
       />
       <TogglePasswordButton
         type="button"
