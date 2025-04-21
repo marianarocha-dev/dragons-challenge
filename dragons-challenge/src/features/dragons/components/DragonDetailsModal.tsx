@@ -58,6 +58,21 @@ export function DragonDetailsModal({ isOpen, onClose, dragon }: DragonDetailsMod
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
+      <button 
+        onClick={onClose} 
+        aria-label="Fechar modal"
+        style={{ 
+          position: 'absolute', 
+          right: '1rem', 
+          top: '1rem',
+          background: 'none',
+          border: 'none',
+          fontSize: '1.5rem',
+          cursor: 'pointer'
+        }}
+      >
+        ×
+      </button>
       <Title>Detalhes do Dragão</Title>
       <InfoContainer>
         <InfoItem>
@@ -67,6 +82,10 @@ export function DragonDetailsModal({ isOpen, onClose, dragon }: DragonDetailsMod
         <InfoItem>
           <Label>Tipo:</Label>
           <Value>{dragon.type}</Value>
+        </InfoItem>
+        <InfoItem>
+          <Label>Cor:</Label>
+          <Value>{dragon.color}</Value>
         </InfoItem>
         <InfoItem>
           <Label>Data de Criação:</Label>

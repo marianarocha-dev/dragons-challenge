@@ -11,7 +11,10 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.jest // add globals do Jest
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -25,4 +28,18 @@ export default tseslint.config(
       ],
     },
   },
+
+  //config especifica para arquivos de teste
+  {
+    files: ['**/*.test.{ts,tsx}', '**/__tests__/**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.jest
+      },
+    },
+    rules: {
+      'react-refresh/only-export-components': 'off'
+    }
+  }
 )

@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.app.json",
+    "compilerOptions": {
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "types": ["jest", "@testing-library/jest-dom"],
+      "lib": ["ES2023", "DOM", "DOM.Iterable"]
+    },
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.test.ts",
+      "src/**/*.test.tsx"
+    ]
+  }
