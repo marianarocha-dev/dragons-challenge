@@ -34,6 +34,7 @@ Uma aplicação web moderna para gerenciamento de dragões, desenvolvida com Rea
 - [React Router Dom](https://reactrouter.com/)
 - [Jest](https://jestjs.io/) + [Testing Library](https://testing-library.com/)
 - LocalStorage para persistência de dados
+- Arquitetura de pastas por features
 
 ---
 
@@ -62,6 +63,8 @@ yarn install
 npm run dev
 # ou
 yarn dev
+
+#para entrar na página de login, crie um usuário e senha de sua preferência
 
 ---
 
