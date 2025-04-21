@@ -195,7 +195,7 @@ export function DragonCard({ dragon, onEdit, onDelete, onDetails }: DragonCardPr
   };
 
   return (
-    <Card onClick={handleFlip}>
+    <Card onClick={handleFlip} data-testid="dragon-card">
       <CardInner $isFlipped={isFlipped}>
         <CardFront>
           <ImageContainer>

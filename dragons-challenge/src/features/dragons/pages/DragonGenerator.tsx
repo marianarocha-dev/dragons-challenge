@@ -9,6 +9,15 @@ interface GeneratedDragon {
   imageUrl: string;
 }
 
+interface DragonGeneratorProps {
+  onGenerateDragon?: (dragon: {
+    name: string;
+    type: string;
+    color: string;
+  }) => void;
+}
+
+
 const Container = styled.div`
   padding: 2rem 4rem 2rem 6rem;
   width: 100%;
@@ -219,7 +228,7 @@ const ErrorMessage = styled.p`
   text-align: center;
 `;
 
-export function DragonGenerator() {
+export function DragonGenerator({ onGenerateDragon }: DragonGeneratorProps) {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [type, setType] = useState<DragonType | ''>('');
@@ -253,12 +262,17 @@ export function DragonGenerator() {
     setError('');
 
     if (!name || !type || !color) {
-      setError('Por favor, preencha todos os campos.');
+      setError('Por favor, preencha todos os campos.');  // Adicionado o ponto final
       return;
     }
 
     try {
       setIsLoading(true);
+
+      // Chama a prop onGenerateDragon se ela existir
+      if (onGenerateDragon) {
+        onGenerateDragon({ name, type, color });
+      }
 
       // encontra a imagem correspondente
       const matchingDragon = dragonImages.find(
@@ -299,7 +313,6 @@ export function DragonGenerator() {
         userDragons.push(newDragon);
         localStorage.setItem(`dragons_${currentUser.id}`, JSON.stringify(userDragons));
         
-        // disparar evento para atualizar a lista
         window.dispatchEvent(new Event('storage'));
         
         navigate('/dragons');
@@ -313,24 +326,29 @@ export function DragonGenerator() {
   return (
     <Container>
       <Title>Gerador de Dragões</Title>
-      <Form onSubmit={handleGenerate}>
+      <Form onSubmit={handleGenerate} role="form" aria-label="Formulário de geração de dragão">
         <FormGroup>
-          <Label>Nome do Dragão</Label>
+          <Label htmlFor="dragon-name">Nome do Dragão</Label>
           <Input
+            id="dragon-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Digite o nome do dragão"
             required
+            aria-required="true"
           />
         </FormGroup>
 
         <FormGroup>
-          <Label>Tipo do Dragão</Label>
+          <Label htmlFor="dragon-type">Tipo do Dragão</Label>
           <Select
+            id="dragon-type"
             value={type}
             onChange={(e) => setType(e.target.value as DragonType)}
             required
+            aria-label="Tipo do Dragão"
+            aria-required="true"
           >
             <option value="">Selecione um tipo</option>
             {dragonTypes.map(type => (
@@ -340,11 +358,14 @@ export function DragonGenerator() {
         </FormGroup>
 
         <FormGroup>
-          <Label>Cor do Dragão</Label>
+          <Label htmlFor="dragon-color">Cor do Dragão</Label>
           <Select
+            id="dragon-color"
             value={color}
             onChange={(e) => setColor(e.target.value as DragonColor)}
             required
+            aria-label="Cor do Dragão"
+            aria-required="true"
           >
             <option value="">Selecione uma cor</option>
             {dragonColors.map(color => (
@@ -353,7 +374,11 @@ export function DragonGenerator() {
           </Select>
         </FormGroup>
 
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        {error && (
+          <ErrorMessage role="alert" aria-live="polite">
+            {error}
+          </ErrorMessage>
+        )}
 
         <ButtonContainer>   
           <Button type="submit" disabled={isLoading}>

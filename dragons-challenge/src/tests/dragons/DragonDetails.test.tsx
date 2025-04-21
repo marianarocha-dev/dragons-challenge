@@ -3,10 +3,8 @@ import { DragonDetailsModal } from '../../features/dragons/components/DragonDeta
 
 describe('DragonDetailsModal Component', () => {
   const mockDragon = {
-    id: 1,
     name: 'Test Dragon',
-    type: 'Fire',
-    color: 'Red',
+    type: 'Fogo',
     createdAt: '2024-01-01T00:00:00.000Z'
   };
 
@@ -17,28 +15,27 @@ describe('DragonDetailsModal Component', () => {
   };
 
   beforeEach(() => {
-    localStorage.setItem('currentUser', JSON.stringify({ id: 1, name: 'Test User' }));
-  });
-
-  afterEach(() => {
-    localStorage.clear();
     jest.clearAllMocks();
   });
 
-  test('deve renderizar os detalhes do dragão no modal', () => {
+  test('deve renderizar os detalhes do dragão', () => {
     render(<DragonDetailsModal {...mockProps} />);
     
     expect(screen.getByText('Test Dragon')).toBeInTheDocument();
-    expect(screen.getByText('Fire')).toBeInTheDocument();
-    
+    expect(screen.getByText('Fogo')).toBeInTheDocument();
+    expect(screen.getByText(/\d{2}\/\d{2}\/\d{4}/)).toBeInTheDocument();
   });
 
-  test('deve chamar onClose quando o botão de fechar é clicado', () => {
+  test('não deve renderizar quando isOpen é false', () => {
+    render(<DragonDetailsModal {...mockProps} isOpen={false} />);
+    
+    expect(screen.queryByText('Detalhes do Dragão')).not.toBeInTheDocument();
+  });
+
+  test('deve chamar onClose ao clicar no botão de fechar', () => {
     render(<DragonDetailsModal {...mockProps} />);
     
-    const closeButton = screen.getByRole('button', { name: '×' });
-    fireEvent.click(closeButton);
-    
+    fireEvent.click(screen.getByRole('button', { name: '×' }));
     expect(mockProps.onClose).toHaveBeenCalled();
   });
 });

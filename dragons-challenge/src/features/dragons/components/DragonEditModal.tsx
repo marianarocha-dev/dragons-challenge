@@ -140,8 +140,9 @@ export function DragonEditModal({ isOpen, onClose, onSave, dragon }: DragonEditM
       <Title>Editar Dragão</Title>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label>Nome:</Label>
+          <Label htmlFor="dragon-name">Nome:</Label>
           <Input
+            id="dragon-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -149,8 +150,9 @@ export function DragonEditModal({ isOpen, onClose, onSave, dragon }: DragonEditM
           />
         </FormGroup>
         <FormGroup>
-          <Label>Tipo:</Label>
+          <Label htmlFor="dragon-type">Tipo:</Label>
           <Select
+            id="dragon-type"
             value={type}
             onChange={(e) => setType(e.target.value)}
             required

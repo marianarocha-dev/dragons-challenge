@@ -1,54 +1,176 @@
-# React + TypeScript + Vite
+# Dragons Challenge - Desafio Técnico DB Server
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web moderna para gerenciamento de dragões, desenvolvida com React, TypeScript, Vite e Styled Components.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📋 Funcionalidades
 
-## Expanding the ESLint configuration
+- **Autenticação**
+  - Login com validação de usuário
+  - Registro de novos usuários
+  - Proteção de rotas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Gerenciamento de Dragões**
+  - Listagem de dragões
+  - Visualização detalhada de cada dragão
+  - Criação de novos dragões com gerador interativo
+  - Edição de dragões existentes
+  - Exclusão de dragões
+  - Ordenação alfabética da lista
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Perfil de Usuário**
+  - Visualização e gerenciamento de informações do usuário
+  - Lista personalizada de dragões por usuário
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Tecnologias Utilizadas
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- [React 18.x](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Styled Components](https://styled-components.com/)
+- [React Router Dom](https://reactrouter.com/)
+- [Jest](https://jestjs.io/) + [Testing Library](https://testing-library.com/)
+- LocalStorage para persistência de dados
+
+---
+
+## 💻 Pré-requisitos
+
+- Node.js (versão 14.x ou superior)
+- npm ou yarn
+
+---
+
+## 🔧 Instalação
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/marianarocha-dev/dragons-challenge.git
+
+# 2. Acesse a pasta do projeto
+cd dragons-challenge
+
+# 3. Instale as dependências
+npm install
+# ou
+yarn install
+
+# 4. Inicie o servidor de desenvolvimento (Vite)
+npm run dev
+# ou
+yarn dev
+
+
+🧪 Testes
+Executar os testes:
+
+bash
+Copiar
+Editar
+# Rodar os testes em modo observador
+npm test -- --watch
+# ou
+yarn test --watch
+
+Cobertura:
+
+Test Suites: 9 passed, 9 total
+
+Tests: 23 passed, 23 total
+
+
+Tipos de Testes
+Testes Unitários: Validação isolada de componentes, serviços e utilitários
+
+Testes de Integração: Verificam fluxos completos de uso e navegação
+
+
+Mocks/Stubs:
+
+Mock do localStorage
+
+Simulação de eventos do usuário
+
+Stub de serviços de upload e dragões
+
+
+🔎 Testes Detalhados:
+
+🛡️ Autenticação (auth)
+
+Login com sucesso
+
+Mensagem para credenciais inválidas
+
+Armazenamento correto no localStorage
+
+Navegação entre telas de login/registro
+
+
+🐉 Dragões (dragons)
+
+Renderização e ordenação alfabética
+
+Criação com visualização em tempo real
+
+Edição e exclusão de dragões
+
+Formatação de datas
+
+Paginação e filtros
+
+
+👤 Perfil (profile)
+
+Visualização dos dados do usuário
+
+Lista personalizada de dragões
+
+Edição do perfil e logout
+
+
+🧪 Serviços
+
+dragonService: CRUD completo, ordenação, validações
+
+uploadService: upload com validação de tipo, erros e integração mockada
+
+
+🧼 Boas Práticas:
+
+Uso de roles e labels acessíveis
+
+Limpeza de estado entre testes
+
+AAA (Arrange, Act, Assert)
+
+Testes documentados e consistentes
+
+
+🎨 Design da Interface
+A interface foi desenvolvida no Figma, priorizando:
+
+Estilo minimalista e acessível
+
+Paleta condizente com a temática
+
+Confira o protótipo da interface no Figma: Acesse o protótipo https://www.figma.com/design/H0hJyZU49TbyUcGjlNVDXb/teste-frontend?node-id=0-1&t=ecIhZpdDsE6uadND-1
+
+
+🔐 Segurança
+Autenticação e validação de credenciais
+
+Proteção de rotas privadas
+
+Validação de campos no frontend
+
+
+👩‍💻 Desenvolvedora
+Mariana Rocha do Amaral
+
+
+📜 Licença
+Este projeto está licenciado sob a MIT License.
