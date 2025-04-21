@@ -4,7 +4,7 @@ Uma aplicação web moderna para gerenciamento de dragões, desenvolvida com Rea
 
 ---
 
-## 📋 Funcionalidades
+## 📋 Funcionalidadesq
 
 - **Autenticação**
   - Login com validação de usuário
@@ -63,8 +63,9 @@ npm run dev
 # ou
 yarn dev
 
+---
 
-🧪 Testes
+## 🧪 Testes
 Executar os testes:
 
 bash
@@ -96,8 +97,9 @@ Simulação de eventos do usuário
 
 Stub de serviços de upload e dragões
 
+---
 
-🔎 Testes Detalhados:
+## 🔎 Testes Detalhados:
 
 🛡️ Autenticação (auth)
 
@@ -149,8 +151,9 @@ AAA (Arrange, Act, Assert)
 
 Testes documentados e consistentes
 
+---
 
-🎨 Design da Interface
+## 🎨 Design da Interface
 A interface foi desenvolvida no Figma, priorizando:
 
 Estilo minimalista e acessível
@@ -159,18 +162,21 @@ Paleta condizente com a temática
 
 Confira o protótipo da interface no Figma: Acesse o protótipo https://www.figma.com/design/H0hJyZU49TbyUcGjlNVDXb/teste-frontend?node-id=0-1&t=ecIhZpdDsE6uadND-1
 
+---
 
-🔐 Segurança
+## 🔐 Segurança
 Autenticação e validação de credenciais
 
 Proteção de rotas privadas
 
 Validação de campos no frontend
 
+---
 
-👩‍💻 Desenvolvedora
+## 👩‍💻 Desenvolvedora
 Mariana Rocha do Amaral
 
+---
 
-📜 Licença
+## 📜 Licença
 Este projeto está licenciado sob a MIT License.
